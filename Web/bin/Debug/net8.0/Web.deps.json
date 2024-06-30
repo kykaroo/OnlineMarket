@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Web/1.0.0": {
+        "dependencies": {
+          "Memory": "1.0.0",
+          "Store": "1.0.0"
+        },
+        "runtime": {
+          "Web.dll": {}
+        }
+      },
+      "Memory/1.0.0": {
+        "dependencies": {
+          "Store": "1.0.0"
+        },
+        "runtime": {
+          "Memory.dll": {}
+        }
+      },
+      "Store/1.0.0": {
+        "runtime": {
+          "Store.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Web/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Memory/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Store/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
