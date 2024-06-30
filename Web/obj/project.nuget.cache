@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "f82CnaCoMwwt86MHBw5QnHZrQiwrIsh3In9r0RbB/SEG7yh2NBa6LOVxwlDX7anX59rH9Uu6z3lTPRZA9A8pLw==",
+  "dgSpecHash": "//ECV6wY4hYLcZ7hxhHsO3uw6nrYDOtwoysR8lyz0wmm0EMkqKl6+J1+xa5z89KmqsW0zzhk7lkyoqHvO4nzeQ==",
   "success": true,
   "projectFilePath": "D:\\RiderProjects\\OnlineMarket\\Web\\Web.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ZXC\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.3\\microsoft.aspnetcore.openapi.8.0.3.nupkg.sha512",
+    "C:\\Users\\ZXC\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\ZXC\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\ZXC\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\ZXC\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\ZXC\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\ZXC\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -3,11 +3,13 @@ using Store;
 
 namespace Web.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class SearchController(IProductRepository productRepository) : Controller
 {
-    public IActionResult Market(string query)
+    [HttpGet]
+    public IActionResult Index(string query)
     {
-        var products = productRepository.GetAllByTitle(query);
-        return View(products);
+       return Ok(productRepository.GetAllByTitle(query));
     }
 }
