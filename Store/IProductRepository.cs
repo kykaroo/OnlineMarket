@@ -2,5 +2,7 @@
 
 public interface IProductRepository
 {
-    public Product[] GetAllByTitle(string titlePart);
+    public Product[] GetAllByTitleOrDescription(string query);
+
+    public Product[] GetAllById(string id);
 }

@@ -5,11 +5,11 @@ namespace Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SearchController(IProductRepository productRepository) : Controller
+public class SearchController(ProductService productService) : Controller
 {
     [HttpGet]
     public IActionResult Index(string query)
     {
-       return Ok(productRepository.GetAllByTitle(query));
+       return Ok(productService.GetAllByQuery(query));
     }
 }
