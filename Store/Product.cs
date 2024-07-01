@@ -20,6 +20,6 @@ public class Product(int id, string title, int price, int stock, bool adultOnly,
 
         query = query.Replace("-", "").Replace(" ", "").ToUpper();
 
-        return Regex.IsMatch(query, @"ID\d*");
+        return Regex.IsMatch(query, @"^ID\d*$");
     }
 }
