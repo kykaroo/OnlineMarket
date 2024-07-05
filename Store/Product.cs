@@ -6,7 +6,7 @@ public class Product(int id, string title, int price, int stock, bool adultOnly,
 {
     public int Id { get; } = id;
     public string Title { get; } = title;
-    public int Price { get; } = price;
+    public float Price { get; } = price;
     public int Stock { get; } = stock;
     public bool AdultOnly { get; } = adultOnly;
     public string Description { get; } = description;

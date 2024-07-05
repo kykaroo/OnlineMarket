@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Store;
+﻿using Store;
 
 namespace Memory;
 
