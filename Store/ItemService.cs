@@ -6,7 +6,9 @@ public class ItemService(IItemRepository itemRepository)
     {
         if (Item.IsId(query))
         {
-            return itemRepository.GetAllById(query[2..]);
+            query = query[2..];
+            
+            return [itemRepository.GetById(int.Parse(query))];
         }
 
         return itemRepository.GetAllByTitleOrDescription(query);

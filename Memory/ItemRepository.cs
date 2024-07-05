@@ -19,8 +19,8 @@ public class ItemRepository : IItemRepository
             item.Description.Contains(query, StringComparison.CurrentCultureIgnoreCase)).ToArray();
     }
 
-    public Item[] GetAllById(string id)
+    public Item GetById(int id)
     {
-        return _items.Where(product => product.Id == int.Parse(id)).ToArray();
+        return _items.Single(product => product.Id == id);
     }
 }

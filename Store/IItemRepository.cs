@@ -4,5 +4,5 @@ public interface IItemRepository
 {
     public Item[] GetAllByTitleOrDescription(string query);
 
-    public Item[] GetAllById(string id);
+    public Item GetById(int id);
 }

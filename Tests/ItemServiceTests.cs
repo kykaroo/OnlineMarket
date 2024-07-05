@@ -9,8 +9,8 @@ public class ItemServiceTests
     public void GetAllByQuery_WithId_CallsGetAllById()
     {
         var itemRepository = new Mock<IItemRepository>();
-        itemRepository.Setup(repository => repository.GetAllById(It.IsAny<string>()))
-            .Returns([new Item(1, "", 0, 0, false, "")]);
+        itemRepository.Setup(repository => repository.GetById(It.IsAny<int>()))
+            .Returns(new Item(1, "", 0, 0, false, ""));
         
         itemRepository.Setup(repository => repository.GetAllByTitleOrDescription(It.IsAny<string>()))
             .Returns([new Item(2, "", 0, 0, false, "")]);
@@ -27,8 +27,8 @@ public class ItemServiceTests
     public void GetAllByQuery_WithTitleOrDescription_CallsGetAllByTitleOrDescription()
     {
         var itemRepository = new Mock<IItemRepository>();
-        itemRepository.Setup(repository => repository.GetAllById(It.IsAny<string>()))
-            .Returns([new Item(1, "", 0, 0, false, "")]);
+        itemRepository.Setup(repository => repository.GetById(It.IsAny<int>()))
+            .Returns(new Item(1, "", 0, 0, false, ""));
         
         itemRepository.Setup(repository => repository.GetAllByTitleOrDescription(It.IsAny<string>()))
             .Returns([new Item(2, "", 0, 0, false, "")]);

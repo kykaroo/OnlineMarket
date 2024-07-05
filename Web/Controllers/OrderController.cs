@@ -17,9 +17,9 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
         
         var order = orderRepository.GetById(1) ?? orderRepository.CreateOrder();
 
-        var item = itemRepository.GetAllById(id.ToString());
+        var item = itemRepository.GetById(id);
         
-        order.AddItem(item[0], numberOfItems);
+        order.AddItem(item, numberOfItems);
         orderRepository.UpdateOrder(order);
         
         return Ok($"Items count: {order.TotalCount}, Total price: {order.TotalPrice}");
