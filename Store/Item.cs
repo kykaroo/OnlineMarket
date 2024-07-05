@@ -2,7 +2,7 @@
 
 namespace Store;
 
-public class Product(int id, string title, int price, int stock, bool adultOnly, string description)
+public class Item(int id, string title, int price, int stock, bool adultOnly, string description)
 {
     public int Id { get; } = id;
     public string Title { get; } = title;

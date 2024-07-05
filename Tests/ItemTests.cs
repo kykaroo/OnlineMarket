@@ -2,59 +2,59 @@ using Store;
 
 namespace Tests;
 
-public class ProductTests
+public class ItemTests
 {
     [Fact]
     public void IsId_Null_False()
     {
-        Assert.False(Product.IsId(null!));
+        Assert.False(Item.IsId(null!));
     }
 
     [Fact]
     public void IsId_Empty_False()
     {
-        Assert.False(Product.IsId(string.Empty));
+        Assert.False(Item.IsId(string.Empty));
     }
     
     [Fact]
     public void IsId_Space_False()
     {
-        Assert.False(Product.IsId(" "));
+        Assert.False(Item.IsId(" "));
     }
     
     [Fact]
     public void IsId_MultipleSpaces_False()
     {
-        Assert.False(Product.IsId("      "));
+        Assert.False(Item.IsId("      "));
     }
 
     [Fact]
     public void IsId_Correct_True()
     {
-        Assert.True(Product.IsId("ID 2"));
+        Assert.True(Item.IsId("ID 2"));
     }
     
     [Fact]
     public void IsId_MultipleNumber_True()
     {
-        Assert.True(Product.IsId("ID 2456231"));
+        Assert.True(Item.IsId("ID 2456231"));
     }
     
     [Fact]
     public void IsId_Dash_True()
     {
-        Assert.True(Product.IsId("ID-2"));
+        Assert.True(Item.IsId("ID-2"));
     }
     
     [Fact]
     public void IsId_LowerCase_True()
     {
-        Assert.True(Product.IsId("id 11"));
+        Assert.True(Item.IsId("id 11"));
     }
     
     [Fact]
     public void IsId_TrashStart_False()
     {
-        Assert.False(Product.IsId("xxx ID 1 xxx"));
+        Assert.False(Item.IsId("xxx ID 1 xxx"));
     }
 }

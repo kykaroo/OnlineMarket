@@ -20,20 +20,20 @@ public class Order
         _items = [..items];
     }
 
-    public void AddItem(Product product, int count)
+    public void AddItem(Item item, int count)
     {
-        ArgumentNullException.ThrowIfNull(product);
+        ArgumentNullException.ThrowIfNull(item);
 
-        var item = _items.SingleOrDefault(x => x.ProductId == product.Id);
+        var itemFromList = _items.SingleOrDefault(x => x.ProductId == item.Id);
 
-        if (item == null)
+        if (itemFromList == null)
         {
-            _items.Add(new OrderItem(product.Id, count, product.Price));
+            _items.Add(new OrderItem(item.Id, count, item.Price));
         }
         else
         {
-            _items.Remove(item);
-            _items.Add(new OrderItem(product.Id,  item.Count + count, product.Price));
+            _items.Remove(itemFromList);
+            _items.Add(new OrderItem(item.Id,  itemFromList.Count + count, item.Price));
         }
     }
 }

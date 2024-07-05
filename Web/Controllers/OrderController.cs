@@ -5,10 +5,10 @@ namespace Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OrderController(IProductRepository productRepository, IOrderRepository orderRepository) : Controller
+public class OrderController(IItemRepository itemRepository, IOrderRepository orderRepository) : Controller
 {
     [HttpPost]
-    public IActionResult Add(int id, int numberOfItems)
+    public IActionResult AddItemToOrder(int id, int numberOfItems)
     {
         if (numberOfItems <= 0)
         {
@@ -17,7 +17,7 @@ public class OrderController(IProductRepository productRepository, IOrderReposit
         
         var order = orderRepository.GetById(1) ?? orderRepository.CreateOrder();
 
-        var item = productRepository.GetAllById(id.ToString());
+        var item = itemRepository.GetAllById(id.ToString());
         
         order.AddItem(item[0], numberOfItems);
         orderRepository.UpdateOrder(order);
