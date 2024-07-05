@@ -4,7 +4,7 @@ namespace Memory;
 
 public class OrderRepository : IOrderRepository
 {
-    private readonly List<Order> _orders = [];
+    private readonly List<Order?> _orders = [];
     
     public Order CreateOrder()
     {
@@ -16,9 +16,9 @@ public class OrderRepository : IOrderRepository
         return order;
     }
 
-    public Order GetById(int id)
+    public Order? GetById(int id)
     {
-        return _orders.Single(order => order.Id == id);
+        return _orders.Find(order => order.Id == id);
     }
 
     public void UpdateOrder(Order order)
