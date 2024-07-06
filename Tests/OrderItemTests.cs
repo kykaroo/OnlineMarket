@@ -25,4 +25,33 @@ public class OrderItemTests
         Assert.Equal(2, orderItem.Count);
         Assert.Equal(3, orderItem.Price);
     }
+
+    [Fact]
+    public void Count_WithPositiveValue_SetsValue()
+    {
+        var orderItem = new OrderItem(0, 5, 0);
+        const int countToValid = 10;
+        
+        orderItem.Count = countToValid;
+
+        Assert.Equal(countToValid, countToValid);
+    }
+
+    [Fact]
+    public void Count_WithNegativeValue_ThrowsArgumentOutOfRangeException()
+    {
+        var orderItem = new OrderItem(0, 5, 0);
+        const int countToValid = -1;
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => orderItem.Count = countToValid);
+    }
+    
+    [Fact]
+    public void Count_WithZeroValue_ThrowsArgumentOutOfRangeException()
+    {
+        var orderItem = new OrderItem(0, 5, 0);
+        const int countToValid = 0;
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => orderItem.Count = countToValid);
+    }
 }

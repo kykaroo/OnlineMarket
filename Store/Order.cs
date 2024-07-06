@@ -26,14 +26,14 @@ public class Order
 
         var itemFromList = _items.SingleOrDefault(x => x.ProductId == item.Id);
 
-        if (itemFromList == null)
+        switch (itemFromList)
         {
-            _items.Add(new OrderItem(item.Id, count, item.Price));
-        }
-        else
-        {
-            _items.Remove(itemFromList);
-            _items.Add(new OrderItem(item.Id,  itemFromList.Count + count, item.Price));
+            case null:
+                _items.Add(new OrderItem(item.Id, count, item.Price));
+                break;
+            default:
+                _items.First(x => x == itemFromList).Count += count;
+                break;
         }
     }
 }
