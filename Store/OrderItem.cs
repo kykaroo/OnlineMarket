@@ -2,7 +2,7 @@
 
 public class OrderItem
 {
-    public int ProductId { get; }
+    public int ItemId { get; }
 
     private int _count;
     public int Count
@@ -17,11 +17,11 @@ public class OrderItem
 
     public float Price { get; }
 
-    public OrderItem(int productId, int count, float price)
+    public OrderItem(int itemId, int count, float price)
     {
         ThrowIfInvalidCount(count);
         
-        ProductId = productId;
+        ItemId = itemId;
         Count = count;
         Price = price;
     }

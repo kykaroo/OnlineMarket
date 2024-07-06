@@ -21,6 +21,6 @@ public class ItemRepository : IItemRepository
 
     public Item? GetById(int id)
     {
-        return _items.FirstOrDefault(product => product.Id == id);
+        return _items.SingleOrDefault(product => product.Id == id);
     }
 }

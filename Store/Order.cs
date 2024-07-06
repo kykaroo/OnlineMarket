@@ -20,11 +20,9 @@ public class Order
         _items = [..items];
     }
 
-    public void AddItem(Item? item, int count)
+    public void AddItem(Item item, int count)
     {
-        ArgumentNullException.ThrowIfNull(item);
-
-        var itemFromList = _items.SingleOrDefault(x => x.ProductId == item.Id);
+        var itemFromList = _items.SingleOrDefault(x => x.ItemId == item.Id);
 
         switch (itemFromList)
         {
@@ -32,8 +30,23 @@ public class Order
                 _items.Add(new OrderItem(item.Id, count, item.Price));
                 break;
             default:
-                _items.First(x => x == itemFromList).Count += count;
+                itemFromList.Count += count;
                 break;
         }
+    }
+
+    public bool TryRemoveItem(Item item, out string errorMessage)
+    { 
+        errorMessage = string.Empty; 
+        var itemFromList = _items.SingleOrDefault(x => x.ItemId == item.Id);
+        
+        if (itemFromList == null)
+        {
+            errorMessage = $"Item with ID \"{item.Id}\" not ordered yet";
+            return false;
+        }
+
+        _items.RemoveAll(x => x.ItemId == item.Id);
+        return true;
     }
 }

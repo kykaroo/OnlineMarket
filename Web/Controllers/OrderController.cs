@@ -17,14 +17,48 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
         
         var order = orderRepository.GetById(1) ?? orderRepository.CreateOrder();
 
-        var item = itemRepository.GetById(id);
+        if (GetItem(id, out var item, out var actionResult)) return actionResult!;
+
+        order.AddItem(item!, numberOfItems);
+        
+        orderRepository.UpdateOrder(order);
+        
+        return Ok($"Items count: {order.TotalCount}, Total price: {order.TotalPrice}");
+    }
+    
+    private bool GetItem(int id, out Item? item, out IActionResult? actionResult)
+    {
+        item = itemRepository.GetById(id);
 
         if (item == null)
         {
-            return BadRequest($"No item with ID {id} found");
+            {
+                actionResult = BadRequest($"No item with ID \"{id}\" found");
+                return true;
+            }
+        }
+
+        actionResult = null;
+        return false;
+    }
+    
+    [HttpDelete]
+    public IActionResult RemoveItemInOrder(int id)
+    {
+        var order = orderRepository.GetById(1);
+        
+        if (order == null)
+        {
+            return BadRequest("You not order anything yet");
         }
         
-        order.AddItem(item, numberOfItems);
+        if (GetItem(id, out var item, out var actionResult)) return actionResult!;
+        
+        if (!order.TryRemoveItem(item!, out var errorMessage))
+        {
+            return BadRequest(errorMessage);
+        }
+        
         orderRepository.UpdateOrder(order);
         
         return Ok($"Items count: {order.TotalCount}, Total price: {order.TotalPrice}");
