@@ -20,7 +20,7 @@ public class Order
         _items = [..items];
     }
 
-    public void AddItem(Item item, int count)
+    public void AddItem(Item? item, int count)
     {
         ArgumentNullException.ThrowIfNull(item);
 

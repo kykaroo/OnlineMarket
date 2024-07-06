@@ -18,6 +18,11 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
         var order = orderRepository.GetById(1) ?? orderRepository.CreateOrder();
 
         var item = itemRepository.GetById(id);
+
+        if (item == null)
+        {
+            return BadRequest($"No item with ID {id} found");
+        }
         
         order.AddItem(item, numberOfItems);
         orderRepository.UpdateOrder(order);
