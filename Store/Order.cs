@@ -22,53 +22,58 @@ public class Order
 
     public void AddItems(Item item, int count)
     {
-        var itemFromList = _items.SingleOrDefault(x => x.ItemId == item.Id);
+        var errorMessage = string.Empty;
+        
+        var orderItem = GetItem(item, ref errorMessage);
 
-        switch (itemFromList)
+        if (orderItem == null)
         {
-            case null:
-                _items.Add(new OrderItem(item.Id, count, item.Price));
-                break;
-            default:
-                itemFromList.Count += count;
-                break;
+            _items.Add(new OrderItem(item.Id, count, item.Price));
+            return;
         }
+        
+        orderItem.Count += count;
     }
 
     public bool TryRemoveAllItems(Item item, out string errorMessage)
     { 
         errorMessage = string.Empty; 
-        var itemFromList = _items.SingleOrDefault(x => x.ItemId == item.Id);
         
-        if (itemFromList == null)
-        {
-            errorMessage = $"Item with ID \"{item.Id}\" not ordered yet";
-            return false;
-        }
+        var orderItem = GetItem(item, ref errorMessage);
+        
+        if (orderItem == null) return false;
 
-        _items.RemoveAll(x => x.ItemId == item.Id);
+        _items.Remove(orderItem);
         return true;
     }
 
     public bool TryRemoveItems(Item item, int count, out string errorMessage)
     {
-        errorMessage = string.Empty; 
-        var index = _items.FindIndex(x => x.ItemId == item.Id);
-        
-        if (index == -1)
-        {
-            errorMessage = $"Item with ID \"{item.Id}\" not ordered yet";
-            return false;
-        }
+        errorMessage = string.Empty;
 
-        if (_items[index].Count <= count)
+        var orderItem = GetItem(item, ref errorMessage);
+        
+        if (orderItem == null) return false;
+
+        if (orderItem.Count <= count)
         {
-            var result = TryRemoveAllItems(item, out errorMessage);
-            return result;
+            _items.Remove(orderItem);
+            return true;
         }
         
-        _items[index].Count -= count;
+        orderItem.Count -= count;
         
         return true;
+    }
+
+    private OrderItem? GetItem(Item item, ref string errorMessage)
+    {
+        var index = _items.FindIndex(x => x.ItemId == item.Id);
+
+        if (index != -1) return _items[index];
+        
+        errorMessage = $"Item with ID \"{item.Id}\" not ordered yet";
+        return null;
+
     }
 }
