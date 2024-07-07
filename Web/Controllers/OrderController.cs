@@ -7,8 +7,8 @@ namespace Web.Controllers;
 [Route("[controller]")]
 public class OrderController(IItemRepository itemRepository, IOrderRepository orderRepository) : Controller
 {
-    [HttpPost]
-    public IActionResult AddItemToOrder(int id, int numberOfItems)
+    [HttpPost("AddItems")]
+    public IActionResult AddItemsToOrder(int id, int numberOfItems)
     {
         if (numberOfItems <= 0)
         {
@@ -19,7 +19,7 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
 
         if (GetItem(id, out var item, out var actionResult)) return actionResult!;
 
-        order.AddItem(item!, numberOfItems);
+        order.AddItems(item!, numberOfItems);
         
         orderRepository.UpdateOrder(order);
         
@@ -42,8 +42,8 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
         return false;
     }
     
-    [HttpDelete]
-    public IActionResult RemoveItemInOrder(int id)
+    [HttpDelete("RemoveAllItems")]
+    public IActionResult RemoveAllItemsInOrder(int id)
     {
         var order = orderRepository.GetById(1);
         
@@ -54,7 +54,34 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
         
         if (GetItem(id, out var item, out var actionResult)) return actionResult!;
         
-        if (!order.TryRemoveItem(item!, out var errorMessage))
+        if (!order.TryRemoveAllItems(item!, out var errorMessage))
+        {
+            return BadRequest(errorMessage);
+        }
+        
+        orderRepository.UpdateOrder(order);
+        
+        return Ok($"Items count: {order.TotalCount}, Total price: {order.TotalPrice}");
+    }
+
+    [HttpDelete("RemoveItems")]
+    public IActionResult RemoveItemsInOrder(int id, int count)
+    {
+        if (count <= 0)
+        {
+            return BadRequest("Trying to add <= 0 items to order");
+        }
+        
+        var order = orderRepository.GetById(1);
+
+        if (order == null)
+        {
+            return BadRequest("You not order anything yet");
+        }
+        
+        if (GetItem(id, out var item, out var actionResult)) return actionResult!;
+
+        if (!order.TryRemoveItems(item!, count, out var errorMessage))
         {
             return BadRequest(errorMessage);
         }

@@ -20,7 +20,7 @@ public class Order
         _items = [..items];
     }
 
-    public void AddItem(Item item, int count)
+    public void AddItems(Item item, int count)
     {
         var itemFromList = _items.SingleOrDefault(x => x.ItemId == item.Id);
 
@@ -35,7 +35,7 @@ public class Order
         }
     }
 
-    public bool TryRemoveItem(Item item, out string errorMessage)
+    public bool TryRemoveAllItems(Item item, out string errorMessage)
     { 
         errorMessage = string.Empty; 
         var itemFromList = _items.SingleOrDefault(x => x.ItemId == item.Id);
@@ -47,6 +47,28 @@ public class Order
         }
 
         _items.RemoveAll(x => x.ItemId == item.Id);
+        return true;
+    }
+
+    public bool TryRemoveItems(Item item, int count, out string errorMessage)
+    {
+        errorMessage = string.Empty; 
+        var index = _items.FindIndex(x => x.ItemId == item.Id);
+        
+        if (index == -1)
+        {
+            errorMessage = $"Item with ID \"{item.Id}\" not ordered yet";
+            return false;
+        }
+
+        if (_items[index].Count <= count)
+        {
+            var result = TryRemoveAllItems(item, out errorMessage);
+            return result;
+        }
+        
+        _items[index].Count -= count;
+        
         return true;
     }
 }
