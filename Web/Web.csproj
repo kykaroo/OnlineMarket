@@ -14,7 +14,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\App\App.csproj" />
-      <ProjectReference Include="..\Memory\Memory.csproj" />
       <ProjectReference Include="..\Store\Store.csproj" />
     </ItemGroup>
 

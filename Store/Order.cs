@@ -1,20 +1,19 @@
-﻿namespace Store;
+﻿using Store.Data;
+
+namespace Store;
 
 public class Order
 {
-    public int Id { get; }
-    
-    public OrderItemCollection Items { get; }
-
+    private readonly OrderData _order;
+    public int Id => _order.Id;
     public int TotalCount => Items.Sum(item => item.Count);
     public float TotalPrice => Items.Sum(item => item.Price * item.Count);
+    public OrderItemCollection Items { get; }
 
-    public Order(int id, IEnumerable<OrderItem> items)
+    public Order(OrderData order)
     {
-        ArgumentNullException.ThrowIfNull(items);
-
-        Id = id;
+        _order = order;
         
-        Items = new OrderItemCollection(items);
+        Items = new OrderItemCollection(_order);
     }
 }

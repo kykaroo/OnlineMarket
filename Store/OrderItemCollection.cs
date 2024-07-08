@@ -1,16 +1,22 @@
 ﻿using System.Collections;
+using Store.Data;
+using Store.Data.Factories;
+using Store.Data.Mapper;
 
 namespace Store;
 
 public class OrderItemCollection : IReadOnlyCollection<OrderItem>
 {
+    private readonly OrderData _orderData;
     private readonly List<OrderItem> _items;
 
-    public OrderItemCollection(IEnumerable<OrderItem> items)
+    public OrderItemCollection(OrderData orderData)
     {
-        ArgumentNullException.ThrowIfNull(items);
+        ArgumentNullException.ThrowIfNull(orderData);
 
-        _items = new List<OrderItem>(items);
+        _orderData = orderData;
+
+        _items = orderData.Items.Select(OrderItemMapper.Map).ToList();
     }
 
     public int Count => _items.Count;
@@ -51,7 +57,11 @@ public class OrderItemCollection : IReadOnlyCollection<OrderItem>
         if (TryGet(itemId, out var orderItem))
             throw new InvalidOperationException("Book already exists.");
 
-        orderItem = new OrderItem(itemId, count, price);
+        var orderItemData = OrderItemFactory.Create(_orderData, itemId, count, price);
+        
+        _orderData.Items.Add(orderItemData);
+        
+        orderItem = OrderItemMapper.Map(orderItemData);
         _items.Add(orderItem);
 
         return orderItem;

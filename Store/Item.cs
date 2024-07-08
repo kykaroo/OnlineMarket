@@ -1,19 +1,50 @@
 ﻿using System.Text.RegularExpressions;
+using Store.Data;
 
 namespace Store;
 
-public class Item(int id, string title, int price, int stock, bool adultOnly, string description)
+public class Item(ItemData item)
 {
-    public int Id { get; } = id;
-    public string Title { get; } = title;
-    public float Price { get; } = price;
-    public int Stock { get; } = stock;
-    public bool AdultOnly { get; } = adultOnly;
-    public string Description { get; } = description;
+    internal readonly ItemData _item = item;
+    public int Id => _item.Id;
+    public string Title
+    {
+        get => _item.Title;
+        set
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(value);
+            
+            _item.Title = value;
+        }
+    }
+
+    public string Description
+    {
+        get => _item.Description;
+        set => _item.Description = value;
+    }
+
+    public float Price
+    {
+        get => _item.Price;
+        set => _item.Price = value;
+    }
+
+    public int Stock
+    {
+        get => _item.Stock;
+        set => _item.Stock = value;
+    }
+
+    public bool AdultOnly
+    {
+        get => _item.AdultOnly;
+        set => _item.AdultOnly = value;
+    }
 
     public static bool IsId(string query)
     {
-        if (query == null)
+        if (string.IsNullOrWhiteSpace(query))
         {
             return false;
         }
