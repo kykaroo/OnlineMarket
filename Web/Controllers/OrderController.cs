@@ -11,35 +11,23 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
     public IActionResult AddItemsToOrder(int id, int numberOfItems)
     {
         if (numberOfItems <= 0)
-        {
             return BadRequest("Trying to add <= 0 items to order");
-        }
+        
+        var item = itemRepository.GetById(id);
+
+        if (item == null)
+            return BadRequest($"Item with ID \"{id}\" not found");
         
         var order = orderRepository.GetById(1) ?? orderRepository.CreateOrder();
 
-        if (GetItem(id, out var item, out var actionResult)) return actionResult!;
-
-        order.AddItems(item!, numberOfItems);
+        if (order.Items.TryGet(id, out var orderItem))
+            orderItem.Count += numberOfItems;
+        else
+            order.Items.Add(id, numberOfItems, item.Price);
         
         orderRepository.UpdateOrder(order);
         
         return Ok($"Items count: {order.TotalCount}, Total price: {order.TotalPrice}");
-    }
-    
-    private bool GetItem(int id, out Item? item, out IActionResult? actionResult)
-    {
-        item = itemRepository.GetById(id);
-
-        if (item == null)
-        {
-            {
-                actionResult = BadRequest($"No item with ID \"{id}\" found");
-                return true;
-            }
-        }
-
-        actionResult = null;
-        return false;
     }
     
     [HttpDelete("RemoveAllItems")]
@@ -51,12 +39,10 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
         {
             return BadRequest("You not order anything yet");
         }
-        
-        if (GetItem(id, out var item, out var actionResult)) return actionResult!;
-        
-        if (!order.TryRemoveAllItems(item!, out var errorMessage))
+
+        if (!order.Items.TryRemoveAllItems(id))
         {
-            return BadRequest(errorMessage);
+           return BadRequest($"You not ordered item with ID \"{id}\" yet");
         }
         
         orderRepository.UpdateOrder(order);
@@ -65,11 +51,11 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
     }
 
     [HttpDelete("RemoveItems")]
-    public IActionResult RemoveItemsInOrder(int id, int count)
+    public IActionResult RemoveItemsInOrder(int id, int numberToRemove)
     {
-        if (count <= 0)
+        if (numberToRemove <= 0)
         {
-            return BadRequest("Trying to add <= 0 items to order");
+            return BadRequest("Trying to remove <= 0 items in order");
         }
         
         var order = orderRepository.GetById(1);
@@ -79,11 +65,9 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
             return BadRequest("You not order anything yet");
         }
         
-        if (GetItem(id, out var item, out var actionResult)) return actionResult!;
-
-        if (!order.TryRemoveItems(item!, count, out var errorMessage))
+        if (!order.Items.TryRemoveItems(id, numberToRemove))
         {
-            return BadRequest(errorMessage);
+            return BadRequest($"You not ordered item with ID \"{id}\" yet");
         }
         
         orderRepository.UpdateOrder(order);
