@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Store;
+﻿using App;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers;
 

@@ -11,7 +11,7 @@ public class Item(int id, string title, int price, int stock, bool adultOnly, st
     public bool AdultOnly { get; } = adultOnly;
     public string Description { get; } = description;
 
-    internal static bool IsId(string query)
+    public static bool IsId(string query)
     {
         if (query == null)
         {

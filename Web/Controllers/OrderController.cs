@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using App;
+using Microsoft.AspNetCore.Mvc;
 using Store;
 
 namespace Web.Controllers;
@@ -73,5 +74,45 @@ public class OrderController(IItemRepository itemRepository, IOrderRepository or
         orderRepository.UpdateOrder(order);
         
         return Ok($"Items count: {order.TotalCount}, Total price: {order.TotalPrice}");
+    }
+
+    [HttpGet("GetMyOrder")]
+    public IActionResult GetMyOrder()
+    {
+        var order = orderRepository.GetById(1);
+
+        if (order == null)
+        {
+            return BadRequest("You order with ID \"1\" not found");
+        }
+        
+        var model = Map(order);
+
+        return Ok(model);
+    }
+
+    private OrderModel Map(Order order)
+    {
+        var itemIds = order.Items.Select(item => item.ItemId);
+        var items = itemRepository.GetAllByIds(itemIds);
+
+        var itemModels = from orderItem in order.Items
+            join item in items on orderItem.ItemId equals item.Id
+            select new OrderItemModel
+            {
+                ItemId = item.Id,
+                Title = item.Title,
+                Decription = item.Description,
+                Count = orderItem.Count,
+                Price = orderItem.Price
+            };
+
+        return new OrderModel
+        {
+            Id = order.Id,
+            Items = itemModels.ToArray(),
+            TotalCount = order.TotalCount,
+            TotalPrice = order.TotalPrice
+        };
     }
 }

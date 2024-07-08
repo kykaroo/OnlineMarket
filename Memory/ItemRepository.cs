@@ -23,4 +23,11 @@ public class ItemRepository : IItemRepository
     {
         return _items.SingleOrDefault(product => product.Id == id);
     }
+
+    public Item[] GetAllByIds(IEnumerable<int> ids)
+    {
+        var result = from item in _items join itemId in ids on item.Id equals itemId select item;
+        
+        return result.ToArray();
+    }
 }
