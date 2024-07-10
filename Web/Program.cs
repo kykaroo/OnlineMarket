@@ -1,4 +1,7 @@
 using App;
+using Data;
+using Microsoft.EntityFrameworkCore;
+using Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ItemService>();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<StoreDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddSingleton<IItemRepository, ItemRepository>();
+builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();
 
