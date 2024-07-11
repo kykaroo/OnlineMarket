@@ -42,15 +42,21 @@ public class Item(ItemData item)
         set => _item.AdultOnly = value;
     }
 
-    public static bool IsId(string query)
+    public static bool TryFormatId(string query, out int id)
     {
+        id = 0;
         if (string.IsNullOrWhiteSpace(query))
         {
             return false;
         }
-
+        
         query = query.Replace("-", "").Replace(" ", "").ToUpper();
 
-        return Regex.IsMatch(query, @"^ID\d*$");
+        var result = Regex.IsMatch(query, @"^ID\d*$");
+
+        if (!result) return false;
+        
+        id = int.Parse(query[2..]);
+        return true;
     }
 }

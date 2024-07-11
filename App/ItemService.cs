@@ -13,11 +13,9 @@ public class ItemService
     
     public Item[] GetAllByQuery(string query)
     {
-        if (!Item.IsId(query)) return _itemRepository.GetAllByTitleOrDescription(query);
-        
-        query = query[2..];
-            
-        return [_itemRepository.GetById(int.Parse(query))];
+        return !Item.TryFormatId(query, out var id)
+            ? _itemRepository.GetAllByTitleOrDescription(query)
+            : [_itemRepository.GetById(id)];
     }
 
     private ItemModel Map(Item item)

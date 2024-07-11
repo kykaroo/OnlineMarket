@@ -17,6 +17,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<StoreDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddSingleton<IItemRepository, ItemRepository>();
 builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<Dictionary<Type, StoreDbContext>>();
+builder.Services.AddSingleton<DbContextFactory>();
 
 var app = builder.Build();
 
