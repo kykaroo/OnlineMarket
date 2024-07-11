@@ -52,6 +52,35 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+                    
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AdultOnly = false,
+                            Description = "Лучший крем в мире от прыщиков на прекрасной заднице",
+                            Price = 1271m,
+                            Stock = 10000,
+                            Title = "Крем от прыщей на жопе"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AdultOnly = false,
+                            Description = "Лучший выглядеть на районе, не умереть в конце",
+                            Price = 11000m,
+                            Stock = 11,
+                            Title = "Куртка Драйв Райан Гослин тренд"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AdultOnly = false,
+                            Description = "Забрали когда штурмовали его хату",
+                            Price = 100000000m,
+                            Stock = 1,
+                            Title = "Носок Папича, вонючий немного"
+                        });
                 });
 
             modelBuilder.Entity("Store.Data.OrderData", b =>

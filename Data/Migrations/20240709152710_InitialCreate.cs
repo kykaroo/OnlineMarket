@@ -64,6 +64,16 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "Id", "AdultOnly", "Description", "Price", "Stock", "Title" },
+                values: new object[,]
+                {
+                    { 1, false, "Лучший крем в мире от прыщиков на прекрасной заднице", 1271m, 10000, "Крем от прыщей на жопе" },
+                    { 2, false, "Лучший выглядеть на районе, не умереть в конце", 11000m, 11, "Куртка Драйв Райан Гослин тренд" },
+                    { 3, false, "Забрали когда штурмовали его хату", 100000000m, 1, "Носок Папича, вонючий немного" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
@@ -81,6 +91,21 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+            
+            migrationBuilder.DeleteData(
+                table: "Items",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Items",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Items",
+                keyColumn: "Id",
+                keyValue: 3);
         }
     }
 }
