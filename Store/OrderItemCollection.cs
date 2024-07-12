@@ -52,14 +52,14 @@ public class OrderItemCollection : IReadOnlyCollection<OrderItem>
         return true;
     }
 
-    public OrderItem Add(int itemId, int count, float price)
+    public OrderItem AddItem(int itemId, int count, float price)
     {
         if (TryGet(itemId, out var orderItem))
-            throw new InvalidOperationException("Book already exists.");
+            throw new InvalidOperationException("Item already exists.");
 
         var orderItemData = OrderItemFactory.Create(_orderData, itemId, count, price);
         
-        _orderData.Items.Add(orderItemData);
+        _orderData.AddItem(orderItemData);
         
         orderItem = OrderItemMapper.Map(orderItemData);
         _items.Add(orderItem);
@@ -72,8 +72,8 @@ public class OrderItemCollection : IReadOnlyCollection<OrderItem>
         var orderItem = Get(itemId);
         
         if (orderItem == null) return false;
-        
-        _items.Remove(orderItem);
+
+        RemoveAllItems(orderItem);
         return true;
     }
     
@@ -85,11 +85,19 @@ public class OrderItemCollection : IReadOnlyCollection<OrderItem>
 
         if (orderItem.Count <= count)
         {
-            _items.Remove(orderItem);
+            RemoveAllItems(orderItem);
             return true;
         }
-
+        
         orderItem.Count -= count;
         return true;
+    }
+
+    private void RemoveAllItems(OrderItem orderItem)
+    {
+        var orderItemData = OrderItemMapper.Map(orderItem);
+        
+        orderItemData.Order.RemoveItem(orderItemData);
+        _items.Remove(orderItem);
     }
 }

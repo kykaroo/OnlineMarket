@@ -6,12 +6,15 @@ public static class OrderItemFactory
     {
         if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater then zero");
 
-        return new OrderItemData
+        var orderItemData = new OrderItemData
         {
             ItemId = itemId,
-            Count = count,
             Price = price,
             Order = orderData
-        };
+        };  
+        
+        orderItemData.ChangeCount(count);
+        
+        return orderItemData;
     }
 }

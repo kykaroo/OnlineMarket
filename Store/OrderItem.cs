@@ -10,11 +10,7 @@ public class OrderItem
     public int Count
     {
         get => _orderItemData.Count;
-        set
-        {
-            if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value), "Count must be greater then zero");
-            _orderItemData.Count = value;
-        }
+        set => _orderItemData.ChangeCount(value);
     }
 
     public float Price

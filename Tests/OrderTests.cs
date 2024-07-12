@@ -7,11 +7,14 @@ public class OrderTests
 {
     private static Order CreateEmptyTestOrder()
     {
-        return new Order(new OrderData
+        var orderData = new OrderData
         {
-            Id = 1,
-            Items = Array.Empty<OrderItemData>()
-        });
+            Id = 1
+        };
+
+        var order = new Order(orderData);
+        
+        return order;
     }
     
     [Fact]
@@ -38,15 +41,21 @@ public class OrderTests
 
     private static Order CreateTestOrder()
     {
-        var order = new Order(new OrderData
+        var orderData = new OrderData
         {
             Id = 1,
-            Items = new[]
-            {
-                new OrderItemData { ItemId = 1, Price = 1, Count = 1 },
-                new OrderItemData { ItemId = 2, Price = 2, Count = 2 }
-            }
-        });
+        };
+
+        var orderItemData1 = new OrderItemData { ItemId = 1, Price = 1 };
+        orderItemData1.ChangeCount(1);
+        orderData.AddItem(orderItemData1);
+
+        var orderItemData2 = new OrderItemData { ItemId = 2, Price = 2 };
+        orderItemData2.ChangeCount(2);
+        orderData.AddItem(orderItemData2);
+
+        var order = new Order(orderData);
+        
         return order;
     }
 
