@@ -2,7 +2,7 @@
 
 public static class ItemDataFactory
 {
-    public static ItemData Create(string title, string description, float price, int stock, bool adultOnly)
+    public static ItemData Create(string title, string description, decimal price, int stock, bool adultOnly)
     {
         if (string.IsNullOrWhiteSpace(title))
         {

@@ -52,7 +52,7 @@ public class OrderItemCollection : IReadOnlyCollection<OrderItem>
         return true;
     }
 
-    public OrderItem AddItem(int itemId, int count, float price)
+    public OrderItem AddItem(int itemId, int count, decimal price)
     {
         if (TryGet(itemId, out var orderItem))
             throw new InvalidOperationException("Item already exists.");

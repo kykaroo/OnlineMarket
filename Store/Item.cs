@@ -24,7 +24,7 @@ public class Item(ItemData item)
         set => _item.Description = value;
     }
 
-    public float Price
+    public decimal Price
     {
         get => _item.Price;
         set => _item.Price = value;

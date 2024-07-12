@@ -2,7 +2,7 @@
 
 public static class OrderItemFactory
 {
-    public static OrderItemData Create(OrderData orderData, int itemId, int count, float price)
+    public static OrderItemData Create(OrderData orderData, int itemId, int count, decimal price)
     {
         if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater then zero");
 

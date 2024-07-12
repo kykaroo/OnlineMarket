@@ -5,7 +5,7 @@ public class OrderItemData
     public int Id { get; set; }
     public int ItemId { get; set; }
     public int Count { get; private set; }
-    public float Price { get; set; }
+    public decimal Price { get; set; }
     public OrderData Order { get; set; }
 
     public void ChangeCount(int newValue)
@@ -24,7 +24,7 @@ public class OrderItemData
         {
             difference = Count - newValue;
             Order.TotalCount -= difference;
-            Order.TotalPrice -= difference * Price;
+            Order.TotalPrice -= (difference * Price);
         }
         else
         {

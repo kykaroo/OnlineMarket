@@ -5,7 +5,7 @@ public class OrderData
     public int Id { get; set; }
     public string UserName { get; set; } = string.Empty;
     public int TotalCount { get; set; }
-    public float TotalPrice { get; set; }
+    public decimal TotalPrice { get; set; }
     public IEnumerable<OrderItemData> Items => _items;
     
     private IList<OrderItemData> _items { get; } = new List<OrderItemData>();

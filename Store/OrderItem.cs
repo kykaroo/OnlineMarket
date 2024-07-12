@@ -13,7 +13,7 @@ public class OrderItem
         set => _orderItemData.ChangeCount(value);
     }
 
-    public float Price
+    public decimal Price
     {
         get => _orderItemData.Price;
         set => _orderItemData.Price = value;

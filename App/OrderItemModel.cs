@@ -6,5 +6,5 @@ public class OrderItemModel
     public string Title { get; set; }
     public string Decription { get; set; }
     public int Count { get; set; }
-    public float Price { get; set; }
+    public decimal Price { get; set; }
 }
